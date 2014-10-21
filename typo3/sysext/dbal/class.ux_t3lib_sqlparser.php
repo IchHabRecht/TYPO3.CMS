@@ -222,6 +222,11 @@ class ux_t3lib_sqlparser extends t3lib_sqlparser {
 	 * @return	string		Output string
 	 */
 	protected function compileAddslashes($str) {
+		switch ((string) $GLOBALS['TYPO3_DB']->handlerCfg[$GLOBALS['TYPO3_DB']->lastHandlerKey]['type']) {
+			case 'native':
+				return parent::compileAddslashes($str);
+				break;
+		}
 		return $str;
 	}
 
