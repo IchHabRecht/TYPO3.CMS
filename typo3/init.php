@@ -149,7 +149,7 @@ if (!$temp_path || substr($temp_path,-strlen(TYPO3_mainDir))!=TYPO3_mainDir)	{	/
 		$temp_path_parts = explode('/', $temp_path);
 		$temp_path_parts = array_slice($temp_path_parts, count($temp_path_parts) - 3);
 		$temp_path = '..../' . implode('/', $temp_path_parts);
-		echo 'This happens if the last ' . strlen(TYPO3_mainDir) . ' characters of this path, ' . $temp_path . ' (end of $temp_path), is NOT "' . TYPO3_mainDir . '" for some reason.<br />
+		echo 'This happens if the last ' . strlen(TYPO3_mainDir) . ' characters of this path, ' . htmlspecialchars($temp_path) . ' (end of $temp_path), is NOT "' . htmlspecialchars(TYPO3_mainDir) . '" for some reason.<br />
 		You may have a strange server configuration.
 		Or maybe you didn\'t set constant TYPO3_MOD_PATH in your module?';
 	}
