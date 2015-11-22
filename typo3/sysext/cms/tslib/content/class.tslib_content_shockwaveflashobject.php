@@ -103,6 +103,11 @@ class tslib_content_ShockwaveFlashObject extends tslib_content_Abstract {
 		$conf['attributes.'] = array_merge((array) $typeConf['default.']['attributes.'], (array) $conf['attributes.']);
 		$conf['embedParams'] = 'flashvars, params, attributes';
 
+		if (isset($conf['flashvars.']['file'])) {
+			$conf['flashvars.']['fileHash'] = t3lib_div::hmac($conf['flashvars.']['file'], 'flashvars');
+			$conf['flashvars.']['fileAuthPrefix'] = t3lib_div::getIndpEnv('TYPO3_SITE_PATH');
+		}
+
 			// Hook for manipulating the conf array, it's needed for some players like flowplayer
 		if (is_array($GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/hooks/class.tx_cms_mediaitems.php']['swfParamTransform'])) {
 			foreach ($GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/hooks/class.tx_cms_mediaitems.php']['swfParamTransform'] as $classRef) {
