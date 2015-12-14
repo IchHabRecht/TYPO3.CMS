@@ -330,7 +330,7 @@ class tx_rtehtmlarea_dam_browse_media extends tx_dam_browse_media {
 </head>
 <script type="text/javascript">
 /*<![CDATA[*/
-	var plugin = window.parent.RTEarea["' . $this->editorNo . '"].editor.getPlugin("TYPO3Image");
+	var plugin = window.parent.RTEarea[' . t3lib_div::quoteJSvalue($this->editorNo) . '].editor.getPlugin("TYPO3Image");
 	function insertImage(file,width,height,alt,title)	{
 		plugin.insertImage(\'<img src="\'+file+\'"'  . ($this->defaultClass?(' class="'.$this->defaultClass.'"'):'') . ' alt="\'+alt+\'" title="\'+title+\'" width="\'+parseInt(width)+\'" height="\'+parseInt(height)+\'" />\');
 	}
@@ -355,7 +355,7 @@ class tx_rtehtmlarea_dam_browse_media extends tx_dam_browse_media {
 		global $LANG,$BACK_PATH,$TYPO3_CONF_VARS;
 
 		$JScode='
-			var plugin = window.parent.RTEarea["' . $editorNo . '"].editor.getPlugin("TYPO3Image");
+			var plugin = window.parent.RTEarea[' . t3lib_div::quoteJSvalue($editorNo) . '].editor.getPlugin("TYPO3Image");
 			var HTMLArea = window.parent.HTMLArea;
 			var Ext = window.parent.Ext;
 			if (Ext.isWebKit) {

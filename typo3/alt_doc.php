@@ -735,7 +735,7 @@ class SC_alt_doc {
 								$rec = current($trData->regTableItems_data);
 								$rec['uid'] = $cmd=='new' ? uniqid('NEW') : $theUid;
 								if ($cmd=='new')	{
-									$rec['pid'] = $theUid=='prev'?$thePrevUid:$theUid;
+									$rec['pid'] = $theUid=='prev' ? (int)$thePrevUid : (int)$theUid;
 								}
 								$this->elementsData[]=array(
 									'table' => $table,
@@ -779,7 +779,7 @@ class SC_alt_doc {
 
 										// Setting the pid value for new records:
 									if ($cmd=='new')	{
-										$panel.= '<input type="hidden" name="data['.$table.']['.$rec['uid'].'][pid]" value="'.$rec['pid'].'" />';
+										$panel.= '<input type="hidden" name="data[' . htmlspecialchars($table) . '][' . htmlspecialchars($rec['uid']) . '][pid]" value="' . (int)$rec['pid'] . '" />';
 										$this->newC++;
 									}
 

@@ -190,7 +190,7 @@ class tx_rtehtmlarea_base extends t3lib_rteapi {
 												}
 											}
 										}
-									} else {		
+									} else {
 											// No system config: system is supported
 										$rteIsAvailable = TRUE;
 										break;
@@ -1391,7 +1391,7 @@ class tx_rtehtmlarea_base extends t3lib_rteapi {
 	 * @return	string		Javascript code
 	 */
 	function setSaveRTE($RTEcounter, $formName, $textareaId, $textareaName) {
-		return 'if (RTEarea["' . $textareaId . '"]) { document.' . $formName . '["' . $textareaName . '"].value = RTEarea["' . $textareaId . '"].editor.getHTML(); } else { OK = 0; };';
+		return 'if (RTEarea[' . t3lib_div::quoteJSvalue($textareaId) . ']) { document.' . $formName . '[' . t3lib_div::quoteJSvalue($textareaName) . '].value = RTEarea[' . t3lib_div::quoteJSvalue($textareaId) . '].editor.getHTML(); } else { OK = 0; };';
 	}
 
 	/**
@@ -1405,7 +1405,7 @@ class tx_rtehtmlarea_base extends t3lib_rteapi {
 	 * @return	string		Javascript code
 	 */
 	function setDeleteRTE($RTEcounter, $formName, $textareaId) {
-		return 'if (RTEarea["' . $textareaId . '"]) { RTEarea["' . $textareaId . '"].deleted = true;}';
+		return 'if (RTEarea[' . t3lib_div::quoteJSvalue($textareaId) . ']) { RTEarea[' . t3lib_div::quoteJSvalue($textareaId) . '].deleted = true;}';
 	}
 
 	/**

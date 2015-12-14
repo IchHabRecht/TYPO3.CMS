@@ -311,7 +311,7 @@ class tx_rtehtmlarea_dam_browse_links extends tx_dam_browse_media {
 			// BEGIN accumulation of header JavaScript:
 		$JScode = '';
 		$JScode.= '
-			var plugin = window.parent.RTEarea["' . $this->editorNo . '"].editor.getPlugin("TYPO3Link");
+			var plugin = window.parent.RTEarea[' . t3lib_div::quoteJSvalue($this->editorNo) . '].editor.getPlugin("TYPO3Link");
 			var HTMLArea = window.parent.HTMLArea;
 				// This JavaScript is primarily for RTE/Link. jumpToUrl is used in the other cases as well...
 			var add_href="'.($this->curUrlArray['href']?'&curUrl[href]='.rawurlencode($this->curUrlArray['href']):'').'";

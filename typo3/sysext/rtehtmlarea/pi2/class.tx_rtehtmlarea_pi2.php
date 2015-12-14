@@ -288,10 +288,10 @@ class tx_rtehtmlarea_pi2 extends tx_rtehtmlarea_base {
 	 */
 	function setSaveRTE($RTEcounter, $form, $textareaId) {
 		return '
-		if (RTEarea[\'' . $textareaId . '\'] && !RTEarea[\'' . $textareaId . '\'].deleted) {
-			var field = document.getElementById(\'RTEarea' . $textareaId . '\');
+		if (RTEarea[' . t3lib_div::quoteJSvalue($textareaId) . '] && !RTEarea[' . t3lib_div::quoteJSvalue($textareaId) . '].deleted) {
+			var field = document.getElementById(' . t3lib_div::quoteJSvalue('RTEarea' . $textareaId) . ');
 			if (field && field.nodeName.toLowerCase() == \'textarea\') {
-				field.value = RTEarea[\'' . $textareaId . '\'][\'editor\'].getHTML();
+				field.value = RTEarea[' . t3lib_div::quoteJSvalue($textareaId) . '][\'editor\'].getHTML();
 			}
 		} else {
 			OK = 0;

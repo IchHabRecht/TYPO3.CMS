@@ -1408,10 +1408,10 @@ class SC_mod_tools_be_user_index {
 					if ($curUid != $uDat['uid'] && !$uDat['disable'] && ($uDat['starttime'] == 0 ||
 						$uDat['starttime'] < $GLOBALS['EXEC_TIME']) && ($uDat['endtime'] == 0 ||
 						$uDat['endtime'] > $GLOBALS['EXEC_TIME'])) {
-						$uItem .= '<a href="' . t3lib_div::linkThisScript(array('SwitchUser'=>$uDat['uid'])) . '" target="_top" title="' . htmlspecialchars($GLOBALS['LANG']->getLL('switchUserTo', true) . ' ' . $uDat['username']) . ' ' . $GLOBALS['LANG']->getLL('changeToMode', TRUE) . '">' .
+						$uItem .= '<a href="' . htmlspecialchars(t3lib_div::linkThisScript(array('SwitchUser'=>$uDat['uid']))) . '" target="_top" title="' . htmlspecialchars($GLOBALS['LANG']->getLL('switchUserTo', true) . ' ' . $uDat['username']) . ' ' . $GLOBALS['LANG']->getLL('changeToMode', TRUE) . '">' .
 								t3lib_iconWorks::getSpriteIcon('actions-system-backend-user-switch') .
 							'</a>'.
-							'<a href="' . t3lib_div::linkThisScript(array('SwitchUser'=>$uDat['uid'], 'switchBackUser' => 1)) . '" target="_top" title="' . htmlspecialchars($GLOBALS['LANG']->getLL('switchUserTo', true) . ' ' . $uDat['username']) . ' ' . $GLOBALS['LANG']->getLL('switchBackMode', TRUE) . '">' .
+							'<a href="' . htmlspecialchars(t3lib_div::linkThisScript(array('SwitchUser'=>$uDat['uid'], 'switchBackUser' => 1))) . '" target="_top" title="' . htmlspecialchars($GLOBALS['LANG']->getLL('switchUserTo', true) . ' ' . $uDat['username']) . ' ' . $GLOBALS['LANG']->getLL('switchBackMode', TRUE) . '">' .
 								t3lib_iconWorks::getSpriteIcon('actions-system-backend-user-emulate') .
 							'</a>';
 					}

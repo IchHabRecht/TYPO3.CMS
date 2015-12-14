@@ -97,10 +97,14 @@ class t3lib_TCEforms_Suggest {
 			// replace "-" with ucwords for the JS object name
 		$jsObj = str_replace(' ', '', ucwords(str_replace('-', ' ', t3lib_div::strtolower($suggestId))));
 		$this->TCEformsObj->additionalJS_post[] = '
-			var ' . $jsObj . ' = new TCEForms.Suggest("' . $fieldname . '", "' . $table . '", "' . $field .
-												  '", "' . $row['uid'] . '", ' . $row['pid'] . ', ' . $minChars . ');
-			' . $jsObj . '.defaultValue = "' . t3lib_div::slashJS($GLOBALS['LANG']->sL('LLL:EXT:lang/locallang_core.xml:labels.findRecord')) . '";
-		';
+			var ' . $jsObj . ' = new TCEForms.Suggest('
+				. t3lib_div::quoteJSvalue($fieldname) . ', '
+				. t3lib_div::quoteJSvalue($table) . ', '
+				. t3lib_div::quoteJSvalue($field) . ', '
+				. t3lib_div::quoteJSvalue($row['uid']) . ', '
+				. (int)$row['pid'] . ', '
+				. (int)$minChars . ');' . LF
+				. $jsObj . '.defaultValue = ' . t3lib_div::quoteJSvalue($GLOBALS['LANG']->sL('LLL:EXT:lang/locallang_core.xml:labels.findRecord')) . ';';
 
 		return $selector;
 	}

@@ -120,7 +120,7 @@ class tx_rtehtmlarea_folderTree extends rteFolderTree {
 	 */
 	function wrapTitle($title,$v)	{
 		$title = htmlspecialchars($title);
-		
+
 		if ($this->ext_isLinkable($v))	{
 			$aOnClick = 'return jumpToUrl(\''.$this->thisScript.'?act='.$GLOBALS['SOBE']->browser->act.'&editorNo='.$GLOBALS['SOBE']->browser->editorNo.'&contentTypo3Language='.$GLOBALS['SOBE']->browser->contentTypo3Language.'&contentTypo3Charset='.$GLOBALS['SOBE']->browser->contentTypo3Charset.'&mode='.$GLOBALS['SOBE']->browser->mode.'&expandFolder='.rawurlencode($v['path']).'\');';
 			return '<a href="#" onclick="'.htmlspecialchars($aOnClick).'">'.$title.'</a>';
@@ -477,7 +477,7 @@ class tx_rtehtmlarea_browse_links extends browse_links {
 			// BEGIN accumulation of header JavaScript:
 		$JScode = '';
 		$JScode.= '
-			var plugin = window.parent.RTEarea["' . $this->editorNo . '"].editor.getPlugin("TYPO3Link");
+			var plugin = window.parent.RTEarea[' . t3lib_div::quoteJSvalue($this->editorNo) . '].editor.getPlugin("TYPO3Link");
 			var HTMLArea = window.parent.HTMLArea;
 			var add_href="'.($this->curUrlArray['href']?'&curUrl[href]='.rawurlencode($this->curUrlArray['href']):'').'";
 			var add_target="'.($this->setTarget?'&curUrl[target]='.rawurlencode($this->setTarget):'').'";

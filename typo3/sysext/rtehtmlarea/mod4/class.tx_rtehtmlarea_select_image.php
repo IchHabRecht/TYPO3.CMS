@@ -54,7 +54,7 @@ class tx_rtehtmlarea_image_folderTree extends t3lib_folderTree {
 	 */
 	function wrapTitle($title,$v)	{
 		$title = htmlspecialchars($title);
-		
+
 		if ($this->ext_isLinkable($v))	{
 			$aOnClick = 'return jumpToUrl(\'?editorNo='.$GLOBALS['SOBE']->browser->editorNo.'&expandFolder='.rawurlencode($v['path']).'\');';
 			return '<a href="#" onclick="'.htmlspecialchars($aOnClick).'">'.$title.'</a>';
@@ -343,7 +343,7 @@ class tx_rtehtmlarea_select_image extends browse_links {
 					$cHeight = t3lib_div::intInRange(t3lib_div::_GP('cHeight'), 0, $this->magicMaxHeight);
 					if (!$cWidth)	$cWidth = $this->magicMaxWidth;
 					if (!$cHeight)	$cHeight = $this->magicMaxHeight;
-	
+
 					$imgI = $this->imgObj->imageMagickConvert($filepath,'WEB',$cWidth.'m',$cHeight.'m');	// ($imagefile,$newExt,$w,$h,$params,$frame,$options,$mustCreate=0)
 					if ($imgI[3])	{
 						$fI=pathinfo($imgI[3]);
@@ -365,7 +365,7 @@ class tx_rtehtmlarea_select_image extends browse_links {
 			}
 		} else {
 			t3lib_div::sysLog('Attempt at creating a magic image failed due to missing image file info.', $this->extKey . '/tx_rtehtmlarea_select_image', t3lib_div::SYSLOG_SEVERITY_ERROR);
-		}	
+		}
 	}
 
 	/**
@@ -403,7 +403,7 @@ class tx_rtehtmlarea_select_image extends browse_links {
 	<title>Untitled</title>
 	<script type="text/javascript">
 	/*<![CDATA[*/
-		var plugin = window.parent.RTEarea["' . $this->editorNo . '"].editor.getPlugin("TYPO3Image");
+		var plugin = window.parent.RTEarea[' . t3lib_div::quoteJSvalue($this->editorNo) . '].editor.getPlugin("TYPO3Image");
 		function insertImage(file,width,height,alt,title,additionalParams)	{
 			plugin.insertImage(\'<img src="\'+file+\'" width="\'+parseInt(width)+\'" height="\'+parseInt(height)+\'"\''  . ($this->defaultClass?('+\' class="'.$this->defaultClass.'"\''):'') .
 				'+(alt?\' alt="\'+alt+\'"\':\'\')+(title?\' title="\'+title+\'"\':\'\')+(additionalParams?\' \'+additionalParams:\'\')+\' />\');
@@ -457,7 +457,7 @@ class tx_rtehtmlarea_select_image extends browse_links {
 		}
 
 		$JScode='
-			var plugin = window.parent.RTEarea["' . $editorNo . '"].editor.getPlugin("TYPO3Image");
+			var plugin = window.parent.RTEarea[' . t3lib_div::quoteJSvalue($editorNo) . '].editor.getPlugin("TYPO3Image");
 			var HTMLArea = window.parent.HTMLArea;
 			function initEventListeners() {
 				if (Ext.isWebKit) {

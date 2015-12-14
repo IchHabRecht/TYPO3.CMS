@@ -67,7 +67,7 @@ class tx_rtehtmlarea_user {
 		';
 
 		$JScode = '
-			var plugin = window.parent.RTEarea["' . $this->editorNo . '"].editor.getPlugin("UserElements");
+			var plugin = window.parent.RTEarea[' . t3lib_div::quoteJSvalue($this->editorNo) . '].editor.getPlugin("UserElements");
 			var HTMLArea = window.parent.HTMLArea;
 			var editor = plugin.editor;
 
