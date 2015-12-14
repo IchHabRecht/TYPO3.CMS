@@ -177,15 +177,19 @@ class tx_Workspaces_ExtDirect_Server extends tx_Workspaces_ExtDirect_AbstractHan
 			'total' => 1,
 			'data' => array(
 				array(
+					// these parts contain HTML (don't escape)
 					'diff' => $diffReturnArray,
 					'live_record' => $liveReturnArray,
-					'path_Live' => $parameter->path_Live,
-					'label_Stage' => $parameter->label_Stage,
-					'stage_position' => $stagePosition['position'],
-					'stage_count' => $stagePosition['count'],
-					'comments' => $commentsForRecord,
 					'icon_Live' => $icon_Live,
-					'icon_Workspace' => $icon_Workspace
+					'icon_Workspace' => $icon_Workspace,
+					// this part is already escaped in getCommentsForRecord()
+					'comments' => $commentsForRecord,
+					// escape/sanitize the others
+					'path_Live' => htmlspecialchars($parameter->path_Live),
+					'label_Stage' => htmlspecialchars($parameter->label_Stage),
+					'stage_position' => (int)$stagePosition['position'],
+					'stage_count' => (int)$stagePosition['count']
+
 				)
 			)
 		);
@@ -216,11 +220,11 @@ class tx_Workspaces_ExtDirect_Server extends tx_Workspaces_ExtDirect_AbstractHan
 			$data = unserialize($sysLogRow['log_data']);
 			$beUserRecord = t3lib_BEfunc::getRecord('be_users', $sysLogRow['userid']);
 
-			$sysLogEntry['stage_title'] = $stagesService->getStageTitle($data['stage']);
-			$sysLogEntry['user_uid'] = $sysLogRow['userid'];
-			$sysLogEntry['user_username'] = is_array($beUserRecord) ? $beUserRecord['username'] : '';
-			$sysLogEntry['tstamp'] = t3lib_BEfunc::datetime($sysLogRow['tstamp']);
-			$sysLogEntry['user_comment'] = $data['comment'];
+			$sysLogEntry['stage_title'] = htmlspecialchars($stagesService->getStageTitle($data['stage']));
+			$sysLogEntry['user_uid'] = (int)$sysLogRow['userid'];
+			$sysLogEntry['user_username'] = is_array($beUserRecord) ? htmlspecialchars($beUserRecord['username']) : '';
+			$sysLogEntry['tstamp'] = htmlspecialchars(t3lib_BEfunc::datetime($sysLogRow['tstamp']));
+			$sysLogEntry['user_comment'] = htmlspecialchars($data['comment']);
 
 			$sysLogReturnArray[] = $sysLogEntry;
 		}
