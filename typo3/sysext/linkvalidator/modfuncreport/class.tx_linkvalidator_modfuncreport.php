@@ -569,13 +569,10 @@ class tx_linkvalidator_ModFuncReport extends t3lib_extobjbase {
 						$GLOBALS['BACK_PATH'],
 						t3lib_div::getIndpEnv('REQUEST_URI') . '?id=' . $this->pObj->id . '&search_levels=' . $this->searchLevel
 					) . '"' .
-					' title="' . $GLOBALS['LANG']->getLL('list.edit') . '">' .
+					' title="' . htmlspecialchars($GLOBALS['LANG']->getLL('list.edit')) . '">' .
 					t3lib_iconWorks::getSpriteIcon('actions-document-open') . '</a>';
 
 		$elementHeadline = $row['headline'];
-		if (empty($elementHeadline)) {
-			$elementHeadline = '<i>' . $GLOBALS['LANG']->getLL('list.no.headline') . '</i>';
-		}
 
 			// Get the language label for the field from TCA
 		if ($GLOBALS['TCA'][$table]['columns'][$row['field']]['label']) {
@@ -591,18 +588,22 @@ class tx_linkvalidator_ModFuncReport extends t3lib_extobjbase {
 
 			// column "Element"
 		$element = t3lib_iconWorks::getSpriteIconForRecord($table, $row, array('title' => $table . ':' . $row['record_uid']));
-		$element .= $elementHeadline;
-		$element .= ' ' . sprintf($GLOBALS['LANG']->getLL('list.field'), $fieldName);
+		if (empty($elementHeadline)) {
+			$element .= '<i>' . htmlspecialchars($GLOBALS['LANG']->getLL('list.no.headline')) . '</i>';
+		} else {
+			$element .= htmlspecialchars($elementHeadline);
+		}
+		$element .= ' ' . htmlspecialchars(sprintf($GLOBALS['LANG']->getLL('list.field'), $fieldName));
 
 		$markerArray['actionlink'] = $actionLinks;
 		$markerArray['path'] = t3lib_BEfunc::getRecordPath($row['record_pid'], '', 0, 0);
 		$markerArray['element'] = $element;
-		$markerArray['headlink'] = $row['link_title'];
-		$markerArray['linktarget'] = $brokenUrl;
+		$markerArray['headlink'] = htmlspecialchars($row['link_title']);
+		$markerArray['linktarget'] = htmlspecialchars($brokenUrl);
 
 		$response = unserialize($row['url_response']);
 		if ($response['valid']) {
-			$linkMessage = '<span style="color: green;">' . $GLOBALS['LANG']->getLL('list.msg.ok') . '</span>';
+			$linkMessage = '<span style="color: green;">' . htmlspecialchars($GLOBALS['LANG']->getLL('list.msg.ok')) . '</span>';
 		} else {
 			$linkMessage = '<span style="color: red;">' . $hookObj->getErrorMessage($response['errorParams']) . '</span>';
 		}
@@ -610,8 +611,7 @@ class tx_linkvalidator_ModFuncReport extends t3lib_extobjbase {
 
 		$lastRunDate = date($GLOBALS['TYPO3_CONF_VARS']['SYS']['ddmmyy'], $row['last_check']);
 		$lastRunTime = date($GLOBALS['TYPO3_CONF_VARS']['SYS']['hhmm'], $row['last_check']);
-		$message = sprintf($GLOBALS['LANG']->getLL('list.msg.lastRun'), $lastRunDate, $lastRunTime);
-		$markerArray['lastcheck'] = $message;
+		$markerArray['lastcheck'] = htmlspecialchars(sprintf($GLOBALS['LANG']->getLL('list.msg.lastRun'), $lastRunDate, $lastRunTime));
 
 			// Return the table html code as string
 		return t3lib_parsehtml::substituteMarkerArray($brokenLinksItemTemplate, $markerArray, '###|###', TRUE, TRUE);
