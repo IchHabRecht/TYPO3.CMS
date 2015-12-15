@@ -1,3 +1,12 @@
+2015-12-15  41f8fae                  [RELEASE] Release of TYPO3 4.5.43 (TYPO3 Release Team)
+2015-12-15  ed1b476                  [SECURITY] Encode paths in error message (Nicole Cordes)
+2015-12-15  52b10b7  #59417          [SECURITY] Open shockwave inclusion in flvplayer.swf (Oliver Hader)
+2015-12-15  84915fc  #59150          [SECURITY] Fix several XSS issues (Nicole Cordes)
+2015-12-15  547e194  #68735          [SECURITY] XSS in Link Validator (Nicole Cordes)
+2015-12-15  095ba84  #25227          [SECURITY] XSS through WS comments (Nicole Cordes)
+2015-09-08  928c73e                  [TASK] Set TYPO3 version to 4.5.43-dev (TYPO3 Release Team)
+
+
 2015-09-08  48a773c                  [RELEASE] Release of TYPO3 4.5.42 (TYPO3 Release Team)
 2015-09-08  d637f1c  #T5             [BUGFIX] Send correct header for jpg images (Nicole Cordes)
 2015-09-08  79ef10e  #68825          [SECURITY] Fix GeneralUtility::sanitizeLocalUrl to detect foreign schemes (Anja Leichsenring)
