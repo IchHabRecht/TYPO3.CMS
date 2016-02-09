@@ -265,7 +265,7 @@ class tx_linkvalidator_linktype_Internal extends tx_linkvalidator_linktype_Abstr
 		}
 
 		if ($errorPage && $errorContent) {
-			$response = $errorPage . '<br />' . $errorContent;
+			$response = $errorPage . LF . $errorContent;
 		} elseif ($errorPage) {
 			$response = $errorPage;
 		} elseif ($errorContent) {

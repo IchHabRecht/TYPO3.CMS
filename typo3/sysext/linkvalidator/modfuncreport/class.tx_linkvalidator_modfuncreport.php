@@ -605,7 +605,17 @@ class tx_linkvalidator_ModFuncReport extends t3lib_extobjbase {
 		if ($response['valid']) {
 			$linkMessage = '<span style="color: green;">' . htmlspecialchars($GLOBALS['LANG']->getLL('list.msg.ok')) . '</span>';
 		} else {
-			$linkMessage = '<span style="color: red;">' . $hookObj->getErrorMessage($response['errorParams']) . '</span>';
+			$linkMessage = '<span style="color: red;">'
+				. nl2br(
+					// Encode for output
+					htmlspecialchars(
+						$hookObj->getErrorMessage($response['errorParams']),
+						ENT_QUOTES,
+						'UTF-8',
+						FALSE
+					)
+				)
+				. '</span>';
 		}
 		$markerArray['linkmessage'] = $linkMessage;
 
