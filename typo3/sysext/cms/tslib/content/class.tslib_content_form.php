@@ -412,7 +412,10 @@ class tslib_content_Form extends tslib_content_Abstract {
 							// Create the select-box:
 						$iCount = count($items);
 						for ($a = 0; $a < $iCount; $a++) {
-							$option .= '<option value="' . $items[$a][1] . '"' . (in_array($items[$a][1], $defaults) ? ' selected="selected"' : '') . '>' . trim($items[$a][0]) . '</option>'; //RTF
+							$option .= '<option value="' . htmlspecialchars($items[$a][1]) . '"' .
+								(in_array($items[$a][1], $defaults) ? ' selected="selected"' : '') . '>' .
+								htmlspecialchars(trim($items[$a][0])) .
+								'</option>';
 						}
 
 						if ($multiple) {
@@ -466,12 +469,12 @@ class tslib_content_Form extends tslib_content_Abstract {
 							$optionParts = '';
 							$radioId = $prefix . $fName . $this->cObj->cleanFormName($items[$a][0]);
 							if ($accessibility) {
-								$radioLabelIdAttribute = ' id="' . $radioId . '"';
+								$radioLabelIdAttribute = ' id="' . htmlspecialchars($radioId) . '"';
 							} else {
 								$radioLabelIdAttribute = '';
 							}
 							$optionParts .= '<input type="radio" name="' . $confData['fieldname'] . '"' .
-									$radioLabelIdAttribute . ' value="' . $items[$a][1] . '"' .
+									$radioLabelIdAttribute . ' value="' . htmlspecialchars($items[$a][1]) . '"' .
 									(!strcmp($items[$a][1], $default) ? ' checked="checked"' : '') . $addParams . ' />';
 							if ($accessibility) {
 								$label = isset($conf['radioWrap.'])
@@ -481,7 +484,7 @@ class tslib_content_Form extends tslib_content_Abstract {
 							} else {
 								$optionParts .= isset($conf['radioWrap.'])
 									? $this->cObj->stdWrap(trim($items[$a][0]), $conf['radioWrap.'])
-									: trim($items[$a][0]);
+									: htmlspecialchars(trim($items[$a][0]));
 							}
 							$option .= isset($conf['radioInputWrap.'])
 								? $this->cObj->stdWrap($optionParts, $conf['radioInputWrap.'])
