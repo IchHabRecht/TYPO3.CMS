@@ -1,3 +1,11 @@
+2016-02-16  5751096                  [RELEASE] Release of TYPO3 4.5.44 (TYPO3 Release Team)
+2016-02-16  8939937  #58896          [SECURITY] SQLi in DBAL (Helmut Hummel)
+2016-02-16  2d2f7c8  #25244          [SECURITY] XSS in content element "Form" (Helmut Hummel)
+2016-02-16  42e83b5  #72240          [SECURITY] XSS in Link Validator (Steffen Müller)
+2015-12-18  0a8f81a  #T6             [BUGFIX] Prevent Javascript error for Flexform sections (Nicole Cordes)
+2015-12-15  8347456                  [TASK] Set TYPO3 version to 4.5.44-dev (TYPO3 Release Team)
+
+
 2015-12-15  41f8fae                  [RELEASE] Release of TYPO3 4.5.43 (TYPO3 Release Team)
 2015-12-15  ed1b476                  [SECURITY] Encode paths in error message (Nicole Cordes)
 2015-12-15  52b10b7  #59417          [SECURITY] Open shockwave inclusion in flvplayer.swf (Oliver Hader)
