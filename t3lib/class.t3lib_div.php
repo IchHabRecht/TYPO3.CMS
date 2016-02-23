@@ -2525,6 +2525,8 @@ final class t3lib_div {
 	 * @author bisqwit at iki dot fi dot not dot for dot ads dot invalid / http://dk.php.net/xml_parse_into_struct + kasperYYYY@typo3.com
 	 */
 	public static function xml2tree($string, $depth = 999) {
+		// Disables the functionality to allow external entities to be loaded when parsing the XML, must be kept
+		$previousValueOfEntityLoader = libxml_disable_entity_loader(TRUE);
 		$parser = xml_parser_create();
 		$vals = array();
 		$index = array();
@@ -2533,6 +2535,7 @@ final class t3lib_div {
 		xml_parser_set_option($parser, XML_OPTION_SKIP_WHITE, 0);
 		xml_parse_into_struct($parser, $string, $vals, $index);
 
+		libxml_disable_entity_loader($previousValueOfEntityLoader);
 		if (xml_get_error_code($parser)) {
 			return 'Line ' . xml_get_current_line_number($parser) . ': ' . xml_error_string(xml_get_error_code($parser));
 		}
@@ -2810,6 +2813,8 @@ final class t3lib_div {
 	protected static function xml2arrayProcess($string, $NSprefix = '', $reportDocTag = FALSE) {
 		global $TYPO3_CONF_VARS;
 
+		// Disables the functionality to allow external entities to be loaded when parsing the XML, must be kept
+		$previousValueOfEntityLoader = libxml_disable_entity_loader(TRUE);
 			// Create parser:
 		$parser = xml_parser_create();
 		$vals = array();
@@ -2827,6 +2832,7 @@ final class t3lib_div {
 			// Parse content:
 		xml_parse_into_struct($parser, $string, $vals, $index);
 
+		libxml_disable_entity_loader($previousValueOfEntityLoader);
 			// If error, return error message:
 		if (xml_get_error_code($parser)) {
 			return 'Line ' . xml_get_current_line_number($parser) . ': ' . xml_error_string(xml_get_error_code($parser));

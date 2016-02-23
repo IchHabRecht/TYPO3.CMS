@@ -94,6 +94,8 @@ class tx_em_Parser_ExtensionXmlPushParser extends tx_em_Parser_ExtensionXmlAbstr
 		if (!is_resource($this->objXML)) {
 			$this->throwException('Unable to create XML parser.');
 		}
+		// Disables the functionality to allow external entities to be loaded when parsing the XML, must be kept
+		$previousValueOfEntityLoader = libxml_disable_entity_loader(TRUE);
 		// keep original character case of XML document
 		xml_parser_set_option($this->objXML, XML_OPTION_CASE_FOLDING, FALSE);
 		xml_parser_set_option($this->objXML, XML_OPTION_SKIP_WHITE, FALSE);
@@ -112,6 +114,7 @@ class tx_em_Parser_ExtensionXmlPushParser extends tx_em_Parser_ExtensionXmlAbstr
 					htmlspecialchars($file)));
 			}
 		}
+		libxml_disable_entity_loader($previousValueOfEntityLoader);
 		xml_parser_free($this->objXML);
 	}
 

@@ -638,6 +638,8 @@ class tx_em_Tools_XmlHandler {
 	function parseL10nXML($string) {
 		// Create parser:
 		$parser = xml_parser_create();
+		// Disables the functionality to allow external entities to be loaded when parsing the XML, must be kept
+		$previousValueOfEntityLoader = libxml_disable_entity_loader(TRUE);
 		$vals = array();
 		$index = array();
 
@@ -647,6 +649,7 @@ class tx_em_Tools_XmlHandler {
 		// Parse content:
 		xml_parse_into_struct($parser, $string, $vals, $index);
 
+		libxml_disable_entity_loader($previousValueOfEntityLoader);
 		// If error, return error message:
 		if (xml_get_error_code($parser)) {
 			$line = xml_get_current_line_number($parser);
