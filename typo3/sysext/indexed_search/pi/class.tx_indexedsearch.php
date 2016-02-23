@@ -239,7 +239,7 @@ class tx_indexedsearch extends tslib_pibase {
 			$this->piVars['sword'] = trim($this->piVars['sword_prev']).' '.$this->piVars['sword'];
 		}
 
-		$this->piVars['results'] = t3lib_div::intInRange($this->piVars['results'],1,100000,$this->defaultResultNumber);
+		$this->piVars['results'] = t3lib_div::intInRange($this->piVars['results'],1,100,$this->defaultResultNumber);
 
 			// Selector-box values defined here:
 		$this->optValues = Array(
