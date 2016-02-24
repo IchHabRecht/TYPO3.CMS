@@ -1,3 +1,11 @@
+2016-02-24  3b37102                  [RELEASE] Release of TYPO3 4.5.45 (TYPO3 Release Team)
+2016-02-24  f7d86a3  #73449          [SECURITY] Stored XSS in shortcut functionality (Steffen Müller)
+2016-02-24  ff7e5d2  #73458          [SECURITY] Limit the search results per page (Steffen Müller)
+2016-02-24  dd76fa5  #73450          [SECURITY] Escape output of tt_content.default (Georg Ringer)
+2016-02-24  64fc837  #61269          [SECURITY] XML entity expansion (Wouter Wolters)
+2016-02-16  2fe1f50                  [TASK] Set TYPO3 version to 4.5.45-dev (TYPO3 Release Team)
+
+
 2016-02-16  5751096                  [RELEASE] Release of TYPO3 4.5.44 (TYPO3 Release Team)
 2016-02-16  8939937  #58896          [SECURITY] SQLi in DBAL (Helmut Hummel)
 2016-02-16  2d2f7c8  #25244          [SECURITY] XSS in content element "Form" (Helmut Hummel)
