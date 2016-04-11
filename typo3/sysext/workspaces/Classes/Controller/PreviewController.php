@@ -99,11 +99,11 @@ class Tx_Workspaces_Controller_PreviewController extends Tx_Workspaces_Controlle
 		if (tx_Workspaces_Service_Workspaces::isNewPage($this->pageId)) {
 			$wsNewPageUri = $uriBuilder->uriFor('newPage', array(), 'Tx_Workspaces_Controller_PreviewController', 'workspaces', 'web_workspacesworkspaces');
 			$wsNewPageParams = '&tx_workspaces_web_workspacesworkspaces[controller]=Preview';
-			$this->view->assign('liveUrl', $wsSettingsPath . $wsNewPageUri . $wsNewPageParams);
+			$this->view->assign('liveUrl', $wsSettingsPath . $wsNewPageUri . $wsNewPageParams . '&ADMCMD_prev=IGNORE');
 		} else {
-			$this->view->assign('liveUrl', $wsBaseUrl . '&ADMCMD_noBeUser=1');
+			$this->view->assign('liveUrl', $wsBaseUrl . '&ADMCMD_noBeUser=1&ADMCMD_prev=IGNORE');
 		}
-		$this->view->assign('wsUrl', $wsBaseUrl . '&ADMCMD_view=1&ADMCMD_editIcons=1&ADMCMD_previewWS=' . $GLOBALS['BE_USER']->workspace);
+		$this->view->assign('wsUrl', $wsBaseUrl . '&ADMCMD_prev=IGNORE&ADMCMD_view=1&ADMCMD_editIcons=1&ADMCMD_previewWS=' . $GLOBALS['BE_USER']->workspace);
 		$this->view->assign('wsSettingsUrl', $wsSettingsUrl);
 		$this->view->assign('backendDomain', t3lib_div::getIndpEnv('TYPO3_HOST_ONLY'));
 		$GLOBALS['BE_USER']->setAndSaveSessionData('workspaces.backend_domain', t3lib_div::getIndpEnv('TYPO3_HOST_ONLY'));
