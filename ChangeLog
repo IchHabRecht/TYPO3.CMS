@@ -1,3 +1,11 @@
+2016-04-18  2dd4204                  [RELEASE] Release of TYPO3 4.5.46 (TYPO3 Release Team)
+2016-04-18  5a6d334  #28175,#72225   [SECURITY] Limit user access in workspace previews (Oliver Hader)
+2016-04-18  b3efe6d  #T13            [BUGFIX] Load xml data before parsing (Nicole Cordes)
+2016-04-18  614ad72  #70373,#T12     [BUGFIX] Adjust UserAgent checks in RTE to detect Edge correctly (Steffen Müller)
+2016-04-18  d9118fb  #T11            [BUGFIX] Fix regression in shortcut menu (Steffen Müller)
+2016-02-24  0974d19                  [TASK] Set TYPO3 version to 4.5.46-dev (TYPO3 Release Team)
+
+
 2016-02-24  3b37102                  [RELEASE] Release of TYPO3 4.5.45 (TYPO3 Release Team)
 2016-02-24  f7d86a3  #73449          [SECURITY] Stored XSS in shortcut functionality (Steffen Müller)
 2016-02-24  ff7e5d2  #73458          [SECURITY] Limit the search results per page (Steffen Müller)
