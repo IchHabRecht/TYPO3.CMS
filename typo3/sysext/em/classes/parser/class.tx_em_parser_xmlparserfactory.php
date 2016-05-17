@@ -65,12 +65,12 @@ class tx_em_Parser_XmlParserFactory {
 	 */
 	static protected $parsers = array(
 		'extension' => array(
-			'tx_em_parser_extensionxmlpullparser' => 'class.tx_em_parser_extensionxmlpullparser.php',
 			'tx_em_parser_extensionxmlpushparser' => 'class.tx_em_parser_extensionxmlpushparser.php',
+			'tx_em_parser_extensionxmlpullparser' => 'class.tx_em_parser_extensionxmlpullparser.php',
 		),
 		'mirror' => array(
-			'tx_em_parser_mirrorxmlpullparser' => 'class.tx_em_parser_mirrorxmlpullparser.php',
 			'tx_em_parser_mirrorxmlpushparser' => 'class.tx_em_parser_mirrorxmlpushparser.php',
+			'tx_em_parser_mirrorxmlpullparser' => 'class.tx_em_parser_mirrorxmlpullparser.php',
 		),
 	);
 
