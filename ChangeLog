@@ -1,7 +1,7 @@
 2016-05-23  0ef165a                  [RELEASE] Release of TYPO3 4.5.47 (TYPO3 Release Team)
-2016-05-23  5ec42a5  #76231,#76256   [SECURITY] Validate complete referring request  Steffen Müller, 5 days ago
-2016-05-17  bf3ca6c  #T14            [BUGFIX] Use push parser instead of pull parser on fetching extension list  Steffen Müller, 7 days ago
-2016-04-18  fa2ef9b                  [TASK] Set TYPO3 version to 4.5.47-dev  TYPO3 Release Team, 5 weeks ago
+2016-05-23  5ec42a5  #76231,#76256   [SECURITY] Validate complete referring request (Steffen Müller)
+2016-05-17  bf3ca6c  #T14            [BUGFIX] Use push parser instead of pull parser on fetching extension list (Steffen Müller)
+2016-04-18  fa2ef9b                  [TASK] Set TYPO3 version to 4.5.47-dev (TYPO3 Release Team)
 
 
 2016-04-18  2dd4204                  [RELEASE] Release of TYPO3 4.5.46 (TYPO3 Release Team)
