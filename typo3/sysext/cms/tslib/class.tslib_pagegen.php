@@ -159,18 +159,7 @@ See <a href="http://wiki.typo3.org/index.php/TYPO3_3.8.1" target="_blank">wiki.t
 		if ($GLOBALS['TSFE']->config['config']['setJS_mouseOver'])	$GLOBALS['TSFE']->setJS('mouseOver');
 		if ($GLOBALS['TSFE']->config['config']['setJS_openPic'])	$GLOBALS['TSFE']->setJS('openPic');
 
-		$GLOBALS['TSFE']->sWordRegEx='';
-		$GLOBALS['TSFE']->sWordList = t3lib_div::_GP('sword_list');
-		if (is_array($GLOBALS['TSFE']->sWordList))	{
-			$space = (!empty($GLOBALS['TSFE']->config['config']['sword_standAlone'])) ? '[[:space:]]' : '';
-
-			foreach ($GLOBALS['TSFE']->sWordList as $val) {
-				if (strlen(trim($val)) > 0) {
-						$GLOBALS['TSFE']->sWordRegEx.= $space.quotemeta($val).$space.'|';
-				}
-			}
-			$GLOBALS['TSFE']->sWordRegEx = preg_replace('/\|$/','',$GLOBALS['TSFE']->sWordRegEx);
-		}
+		self::initializeSearchWordDataInTsfe();
 
 			// linkVars
 		$linkVars = (string)$GLOBALS['TSFE']->config['config']['linkVars'];
@@ -249,6 +238,25 @@ See <a href="http://wiki.typo3.org/index.php/TYPO3_3.8.1" target="_blank">wiki.t
 			}
 		} else {
 			$GLOBALS['TSFE']->getPageRenderer()->setRenderXhtml(FALSE);
+		}
+	}
+
+	/**
+	 * Fills the sWordList property and builds the regular expression in TSFE that can be used to split
+	 * strings by the submitted search words.
+	 */
+	protected static function initializeSearchWordDataInTsfe()
+	{
+		$GLOBALS['TSFE']->sWordRegEx = '';
+		$GLOBALS['TSFE']->sWordList = t3lib_div::_GP('sword_list');
+		if (is_array($GLOBALS['TSFE']->sWordList)) {
+			$space = !empty($GLOBALS['TSFE']->config['config']['sword_standAlone']) ? '[[:space:]]' : '';
+			foreach ($GLOBALS['TSFE']->sWordList as $val) {
+				if (trim($val) !== '') {
+					$GLOBALS['TSFE']->sWordRegEx .= $space . preg_quote($val, '/') . $space . '|';
+				}
+			}
+			$GLOBALS['TSFE']->sWordRegEx = rtrim($GLOBALS['TSFE']->sWordRegEx, '|');
 		}
 	}
 
