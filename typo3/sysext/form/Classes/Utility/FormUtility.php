@@ -14,6 +14,9 @@ namespace TYPO3\CMS\Form\Utility;
  * The TYPO3 project - inspiring people to share!
  */
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Form\Domain\Factory\TypoScriptFactory;
+
 /**
  * Common helper methods.
  *
@@ -32,7 +35,7 @@ class FormUtility implements \TYPO3\CMS\Core\SingletonInterface {
 	 * @return \TYPO3\CMS\Form\Utility\FormUtility
 	 */
 	static public function getInstance() {
-		return \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(__CLASS__);
+		return GeneralUtility::makeInstance(__CLASS__);
 	}
 
 	/**
@@ -123,6 +126,27 @@ class FormUtility implements \TYPO3\CMS\Core\SingletonInterface {
 			$lastPart = strtolower($lastPart);
 		}
 		return $lastPart;
+	}
+
+	/**
+	 * Create content object renderer for the requested context.
+	 * If no context is given, the current from TypoScriptFactory
+	 * is retrieved, since it's fortunately a singleton object.
+	 *
+	 * @param NULL|bool $disableContentObjectRendering
+	 * @return \TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer|\TYPO3\CMS\Form\ContentObject\ContentObjectRenderer
+	 */
+	public function createContentObjectRenderer($disableContentObjectRendering = NULL) {
+		if ($disableContentObjectRendering === NULL) {
+			$disableContentObjectRendering = TypoScriptFactory::getInstance()->getDisableContentElement();
+		}
+
+		if ($disableContentObjectRendering) {
+			$contentObjectRenderer = GeneralUtility::makeInstance('TYPO3\\CMS\\Form\\ContentObject\\ContentObjectRenderer');
+		} else {
+			$contentObjectRenderer = GeneralUtility::makeInstance('TYPO3\\CMS\\Frontend\\ContentObject\\ContentObjectRenderer');
+		}
+		return $contentObjectRenderer;
 	}
 
 }

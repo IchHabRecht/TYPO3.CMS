@@ -40,6 +40,20 @@ class TypoScriptFactory implements \TYPO3\CMS\Core\SingletonInterface {
 	protected $disableContentElement = FALSE;
 
 	/**
+	 * @return TypoScriptFactory
+	 */
+	public static function getInstance() {
+		return \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(__CLASS__);
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function getDisableContentElement() {
+		return $this->disableContentElement;
+	}
+
+	/**
 	 * Build model from Typoscript
 	 *
 	 * @param array $typoscript Typoscript containing all configuration
@@ -376,7 +390,7 @@ class TypoScriptFactory implements \TYPO3\CMS\Core\SingletonInterface {
 	 */
 	protected function getLocalConentObject() {
 		if (!isset($this->localContentObject)) {
-			$this->localContentObject = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Frontend\\ContentObject\\ContentObjectRenderer');
+			$this->localContentObject = \TYPO3\CMS\Form\Utility\FormUtility::getInstance()->createContentObjectRenderer($this->disableContentElement);
 		}
 		return $this->localContentObject;
 	}

@@ -60,7 +60,7 @@ class MailView {
 	 * Constructor
 	 */
 	public function __construct(\TYPO3\CMS\Core\Mail\MailMessage $mailMessage, array $typoScript) {
-		$this->localCobj = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Frontend\\ContentObject\\ContentObjectRenderer');
+		$this->localCobj = \TYPO3\CMS\Form\Utility\FormUtility::getInstance()->createContentObjectRenderer();
 		$this->localizationHandler = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Form\\Localization');
 		$this->mailMessage = $mailMessage;
 		$this->typoScript = $typoScript;

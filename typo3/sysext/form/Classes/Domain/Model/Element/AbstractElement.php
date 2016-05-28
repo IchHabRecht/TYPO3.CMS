@@ -154,7 +154,7 @@ abstract class AbstractElement {
 	 * @param array $arguments Configuration array
 	 */
 	public function __construct() {
-		$this->localCobj = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Frontend\\ContentObject\\ContentObjectRenderer');
+		$this->localCobj = \TYPO3\CMS\Form\Utility\FormUtility::getInstance()->createContentObjectRenderer();
 		$this->requestHandler = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Form\\Request');
 		$this->validateClass = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Form\\Utility\\ValidatorUtility');
 		$this->elementCounter = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Form\\ElementCounter');

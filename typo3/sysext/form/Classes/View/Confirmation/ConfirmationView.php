@@ -64,7 +64,7 @@ class ConfirmationView extends \TYPO3\CMS\Form\View\Confirmation\Element\Contain
 	 * @param array $typoscript
 	 */
 	public function __construct(\TYPO3\CMS\Form\Domain\Model\Form $model, array $typoscript) {
-		$this->localCobj = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Frontend\\ContentObject\\ContentObjectRenderer');
+		$this->localCobj = \TYPO3\CMS\Form\Utility\FormUtility::getInstance()->createContentObjectRenderer();
 		$this->localizationHandler = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Form\\Localization');
 		$this->typoscript = $typoscript;
 		parent::__construct($model);
