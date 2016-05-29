@@ -6238,7 +6238,7 @@ class tslib_cObj {
 	 */
 	function getMailTo($mailAddress, $linktxt, $initP = '?') {
 		if (!strcmp($linktxt, '')) {
-			$linktxt = $mailAddress;
+			$linktxt = htmlspecialchars($mailAddress);
 		}
 
 		$mailToUrl = 'mailto:' . $mailAddress;
@@ -6253,7 +6253,7 @@ class tslib_cObj {
 				if ($GLOBALS['TSFE']->config['config']['spamProtectEmailAddresses_atSubst']) {
 					$atLabel = trim($GLOBALS['TSFE']->config['config']['spamProtectEmailAddresses_atSubst']);
 				}
-				$spamProtectedMailAddress = str_replace('@', ($atLabel ? $atLabel : '(at)'), $mailAddress);
+				$spamProtectedMailAddress = str_replace('@', ($atLabel ? $atLabel : '(at)'), htmlspecialchars($mailAddress));
 
 				if ($GLOBALS['TSFE']->config['config']['spamProtectEmailAddresses_lastDotSubst']) {
 					$lastDotLabel = trim($GLOBALS['TSFE']->config['config']['spamProtectEmailAddresses_lastDotSubst']);
