@@ -195,7 +195,7 @@ class tx_em_Repository_Utility implements t3lib_Singleton {
 	 */
 	public function getRemoteExtListFile() {
 		$mirror = $this->getMirrors(TRUE)->getMirror();
-		$filePath = 'http://' . $mirror['host'] . $mirror['path']
+		$filePath = 'https://' . $mirror['host'] . $mirror['path']
 				. 'extensions.xml.gz';
 		return $filePath;
 	}
@@ -209,7 +209,7 @@ class tx_em_Repository_Utility implements t3lib_Singleton {
 	 */
 	public function getRemoteExtHashFile() {
 		$mirror = $this->getMirrors(TRUE)->getMirror();
-		$filePath = 'http://' . $mirror['host'] . $mirror['path']
+		$filePath = 'https://' . $mirror['host'] . $mirror['path']
 				. 'extensions.md5';
 		return $filePath;
 	}
