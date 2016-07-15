@@ -1462,7 +1462,7 @@ class tslib_cObj {
 						? $this->stdWrap($conf['target'], $conf['target.'])
 						: $conf['target'];
 					if ($target) {
-						$target = sprintf(' target="%s"', $target);
+						$target = sprintf(' target="%s"', htmlspecialchars($target));
 					} else {
 						$target = ' target="thePicture"';
 					}
@@ -1535,7 +1535,7 @@ class tslib_cObj {
 			if (t3lib_div::inList('jpg,gif,jpeg,png', $fileinfo['fileext'])) {
 				$imgFile = $incFile;
 				$imgInfo = @getImageSize($imgFile);
-				return '<img src="' . $GLOBALS['TSFE']->absRefPrefix . $imgFile .
+				return '<img src="' . htmlspecialchars($GLOBALS['TSFE']->absRefPrefix . $imgFile) .
 					'" width="' . $imgInfo[0] . '" height="' . $imgInfo[1] . '"' .
 					$this->getBorderAttr(' border="0"') . ' ' . $addParams . ' />';
 			} elseif (filesize($incFile) < 1024 * 1024) {
@@ -2915,7 +2915,7 @@ class tslib_cObj {
 	public function stdWrap_wrapAlign($content = '', $conf = array()) {
 		$wrapAlign = trim($conf['wrapAlign']);
 		if ($wrapAlign) {
-			$content = $this->wrap($content, '<div style="text-align:' . $wrapAlign . ';">|</div>');
+			$content = $this->wrap($content, '<div style="text-align:' . htmlspecialchars($wrapAlign) . ';">|</div>');
 		}
 		return $content;
 	}
@@ -3916,15 +3916,15 @@ class tslib_cObj {
 		if ($conf['altWrap']) {
 			$theValue = $this->wrap($theValue, $conf['altWrap']);
 		} elseif ($theFace || $theSize || $theColor) {
-			$fontWrap = '<font' . ($theFace ? ' face="' . $theFace . '"' : '') .
-				($theSize ? ' size="' . $theSize . '"' : '') .
-				($theColor ? ' color="' . $theColor . '"' : '') .
+			$fontWrap = '<font' . ($theFace ? ' face="' . htmlspecialchars($theFace) . '"' : '') .
+				($theSize ? ' size="' . (int)$theSize . '"' : '') .
+				($theColor ? ' color="' . htmlspecialchars($theColor) . '"' : '') .
 				'>|</font>';
 			$theValue = $this->wrap($theValue, $fontWrap);
 		}
 			// align
 		if ($align) {
-			$theValue = $this->wrap($theValue, '<div style="text-align:' . $align . ';">|</div>');
+			$theValue = $this->wrap($theValue, '<div style="text-align:' . htmlspecialchars($align) . ';">|</div>');
 		}
 			// return
 		return $theValue;
@@ -3965,14 +3965,14 @@ class tslib_cObj {
 		$tableTagArray = array(
 			'<table'
 		);
-		$tableTagArray[] = 'border="' . $border . '"';
-		$tableTagArray[] = 'cellspacing="' . $cellspacing . '"';
-		$tableTagArray[] = 'cellpadding="' . $cellpadding . '"';
+		$tableTagArray[] = 'border="' . htmlspecialchars($border) . '"';
+		$tableTagArray[] = 'cellspacing="' . htmlspecialchars($cellspacing) . '"';
+		$tableTagArray[] = 'cellpadding="' . htmlspecialchars($cellpadding) . '"';
 		if ($align) {
-			$tableTagArray[] = 'align="' . $align . '"';
+			$tableTagArray[] = 'align="' . htmlspecialchars($align) . '"';
 		}
 		if ($theColor) {
-			$tableTagArray[] = 'bgcolor="' . $theColor . '"';
+			$tableTagArray[] = 'bgcolor="' . htmlspecialchars($theColor) . '"';
 		}
 
 		if ($conf['params']) {
@@ -4113,7 +4113,7 @@ class tslib_cObj {
 							$icon = t3lib_extMgm::siteRelPath('cms') . 'tslib/media/miscicons/notfound_thumb.gif';
 						}
 						$icon = '<img src="' . htmlspecialchars($GLOBALS['TSFE']->absRefPrefix . $icon) . '"' .
-							$this->getBorderAttr(' border="0"') . '' . $this->getAltParam($conf) . ' />';
+							$this->getBorderAttr(' border="0"') . $this->getAltParam($conf) . ' />';
 					}
 				} else {
 					$icon = '<img src="' . htmlspecialchars($GLOBALS['TSFE']->absRefPrefix . $icon) .
@@ -4852,10 +4852,10 @@ class tslib_cObj {
 				if ($GLOBALS['TSFE']->config['config']['jumpurl_enable']) {
 					$jumpurl = 'http://' . $parts[0];
 					$juHash = t3lib_div::hmac($jumpurl, 'jumpurl');
-					$res = '<a' . ' href="' . htmlspecialchars(($GLOBALS['TSFE']->absRefPrefix . $GLOBALS['TSFE']->config['mainScript'] . $initP . '&jumpurl=' . rawurlencode($jumpurl))) . '&juHash=' . $juHash . $GLOBALS['TSFE']->getMethodUrlIdToken . '"' . ($target ? ' target="' . $target . '"' : '') . $aTagParams . $this->extLinkATagParams(('http://' . $parts[0]), 'url') . '>';
+					$res = '<a' . ' href="' . htmlspecialchars(($GLOBALS['TSFE']->absRefPrefix . $GLOBALS['TSFE']->config['mainScript'] . $initP . '&jumpurl=' . rawurlencode($jumpurl))) . '&juHash=' . $juHash . $GLOBALS['TSFE']->getMethodUrlIdToken . '"' . ($target ? ' target="' . htmlspecialchars($target) . '"' : '') . $aTagParams . $this->extLinkATagParams(('http://' . $parts[0]), 'url') . '>';
 				} else {
 					$res = '<a' . ' href="http://' . htmlspecialchars($parts[0]) . '"' .
-						($target ? ' target="' . $target . '"' : '') .
+						($target ? ' target="' . htmlspecialchars($target) . '"' : '') .
 						$aTagParams . $this->extLinkATagParams('http://' . $parts[0], 'url') .
 						'>';
 				}
@@ -5610,7 +5610,7 @@ class tslib_cObj {
 					}
 					$this->lastTypoLinkTarget = $target;
 					$finalTagParts['url'] = $this->lastTypoLinkUrl;
-					$finalTagParts['targetParams'] = $target ? ' target="' . $target . '"' : '';
+					$finalTagParts['targetParams'] = $target ? ' target="' . htmlspecialchars($target) . '"' : '';
 					$finalTagParts['TYPE'] = 'url';
 					$finalTagParts['aTagParams'] .= $this->extLinkATagParams($finalTagParts['url'], $finalTagParts['TYPE']);
 				} elseif ($containsSlash || $isLocalFile) { // file (internal)
@@ -5641,7 +5641,7 @@ class tslib_cObj {
 						$this->lastTypoLinkTarget = $target;
 
 						$finalTagParts['url'] = $this->lastTypoLinkUrl;
-						$finalTagParts['targetParams'] = $target ? ' target="' . $target . '"' : '';
+						$finalTagParts['targetParams'] = $target ? ' target="' . htmlspecialchars($target) . '"' : '';
 						$finalTagParts['TYPE'] = 'file';
 						$finalTagParts['aTagParams'] .= $this->extLinkATagParams($finalTagParts['url'], $finalTagParts['TYPE']);
 					} else {
@@ -5959,21 +5959,21 @@ class tslib_cObj {
 					",'FEopenLink'," . t3lib_div::quoteJSvalue($JSwindowParams) . ");vHWin.focus();return false;";
 				$res = '<a href="' . htmlspecialchars($finalTagParts['url']) . '"' .
 					$target . ' onclick="' . htmlspecialchars($onClick) . '"' .
-					($title ? ' title="' . $title . '"' : '') .
-					($linkClass ? ' class="' . $linkClass . '"' : '') .
+					($title ? ' title="' . htmlspecialchars($title) . '"' : '') .
+					($linkClass ? ' class="' . htmlspecialchars($linkClass) . '"' : '') .
 					$finalTagParts['aTagParams'] . '>';
 			} else {
 				if ($GLOBALS['TSFE']->spamProtectEmailAddresses === 'ascii' && $finalTagParts['TYPE'] === 'mailto') {
 					$res = '<a href="' . $finalTagParts['url'] . '"' .
-						($title ? ' title="' . $title . '"' : '') .
+						($title ? ' title="' . htmlspecialchars($title) . '"' : '') .
 						$finalTagParts['targetParams'] .
-						($linkClass ? ' class="' . $linkClass . '"' : '') .
+						($linkClass ? ' class="' . htmlspecialchars($linkClass) . '"' : '') .
 						$finalTagParts['aTagParams'] . '>';
 				} else {
 					$res = '<a href="' . htmlspecialchars($finalTagParts['url']) . '"' .
-						($title ? ' title="' . $title . '"' : '') .
+						($title ? ' title="' . htmlspecialchars($title) . '"' : '') .
 						$finalTagParts['targetParams'] .
-						($linkClass ? ' class="' . $linkClass . '"' : '') .
+						($linkClass ? ' class="' . htmlspecialchars($linkClass) . '"' : '') .
 						$finalTagParts['aTagParams'] . '>';
 				}
 			}
