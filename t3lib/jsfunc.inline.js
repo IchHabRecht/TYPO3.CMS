@@ -938,7 +938,11 @@ var inline = {
 			var value;
 			if (formObj.nodeName == 'SELECT') value = formObj.options[formObj.selectedIndex].text;
 			else value = formObj.value;
-			$(objectId+'_label').innerHTML = value.length ? value : this.noTitleString;
+			if ($(objectId + '_label').textContent != undefined) {
+				$(objectId + '_label').textContent = value.length ? value : this.noTitleString;
+			} else {
+				$(objectId + '_label').innerText = value.length ? value : this.noTitleString;
+			}
 		}
 		return true;
 	},
