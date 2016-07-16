@@ -474,73 +474,74 @@ class tx_cms_layout extends recordList {
 			// For EACH languages... :
 			foreach ($langListArr as $lP) { // If NOT languageMode, then we'll only be through this once.
 				$showLanguage = ' AND sys_language_uid IN (' . $lP . ',-1)';
-				$cList = explode(',', $this->tt_contentConfig['cols']);
+				$cList = t3lib_div::trimExplode(',', $this->tt_contentConfig['cols'], TRUE);
 				$content = array();
 				$head = array();
 
-				// Select content records per column
-				$contentRecordsPerColumn = $this->getContentRecordsPerColumn('table', $id, array_values($cList), $showHidden . $showLanguage);
-				// For EACH column, render the content into a variable:
-				foreach ($cList as $key) {
-					if (!$lP) {
-						$defLanguageCount[$key] = array();
-					}
+				if (!empty($cList)) {
+					// Select content records per column
+					$contentRecordsPerColumn = $this->getContentRecordsPerColumn('table', $id, array_values($cList), $showHidden . $showLanguage);
+					// For EACH column, render the content into a variable:
+					foreach ($cList as $key) {
+						if (!$lP) {
+							$defLanguageCount[$key] = array();
+						}
 
-					$rowArr = $contentRecordsPerColumn[$key];
-					$this->generateTtContentDataArray($rowArr);
+						$rowArr = $contentRecordsPerColumn[$key];
+						$this->generateTtContentDataArray($rowArr);
 
-					// If it turns out that there are not content elements in the column, then display a big button which links directly to the wizard script:
-					if ($this->doEdit && $this->option_showBigButtons && !intval($key) && count($rowArr) == 0) {
-						$onClick = "window.location.href='db_new_content_el.php?id=" . $id . '&colPos=' . intval($key) . '&sys_language_uid=' . $lP . '&uid_pid=' . $id . '&returnUrl=' . rawurlencode(t3lib_div::getIndpEnv('REQUEST_URI')) . "';";
-						$theNewButton = $GLOBALS['SOBE']->doc->t3Button($onClick, $GLOBALS['LANG']->getLL('newPageContent'));
-						$content[$key] .= '<img src="clear.gif" width="1" height="5" alt="" /><br />' . $theNewButton;
-					}
+						// If it turns out that there are not content elements in the column, then display a big button which links directly to the wizard script:
+						if ($this->doEdit && $this->option_showBigButtons && !intval($key) && count($rowArr) == 0) {
+							$onClick = "window.location.href='db_new_content_el.php?id=" . $id . '&colPos=' . intval($key) . '&sys_language_uid=' . $lP . '&uid_pid=' . $id . '&returnUrl=' . rawurlencode(t3lib_div::getIndpEnv('REQUEST_URI')) . "';";
+							$theNewButton = $GLOBALS['SOBE']->doc->t3Button($onClick, $GLOBALS['LANG']->getLL('newPageContent'));
+							$content[$key] .= '<img src="clear.gif" width="1" height="5" alt="" /><br />' . $theNewButton;
+						}
 
-					// Traverse any selected elements and render their display code:
-					foreach ($rowArr as $rKey => $row) {
+						// Traverse any selected elements and render their display code:
+						foreach ($rowArr as $rKey => $row) {
 
-						if (is_array($row) && (int) $row['t3ver_state'] != 2) {
-							$singleElementHTML = '';
-							if (!$lP && $row['sys_language_uid'] != -1) {
-								$defLanguageCount[$key][] = $row['uid'];
-							}
+							if (is_array($row) && (int)$row['t3ver_state'] != 2) {
+								$singleElementHTML = '';
+								if (!$lP && $row['sys_language_uid'] != -1) {
+									$defLanguageCount[$key][] = $row['uid'];
+								}
 
-							$editUidList .= $row['uid'] . ',';
-							$singleElementHTML .= $this->tt_content_drawHeader($row, $this->tt_contentConfig['showInfo'] ? 15 : 5, $this->defLangBinding && $lP > 0, TRUE);
+								$editUidList .= $row['uid'] . ',';
+								$singleElementHTML .= $this->tt_content_drawHeader($row, $this->tt_contentConfig['showInfo'] ? 15 : 5, $this->defLangBinding && $lP > 0, TRUE);
 
-							$isRTE = $RTE && $this->isRTEforField('tt_content', $row, 'bodytext');
-							$singleElementHTML .= '<div ' . ($row['_ORIG_uid'] ? ' class="ver-element"' : '') . '>' . $this->tt_content_drawItem($row, $isRTE) . '</div>';
+								$isRTE = $RTE && $this->isRTEforField('tt_content', $row, 'bodytext');
+								$singleElementHTML .= '<div ' . ($row['_ORIG_uid'] ? ' class="ver-element"' : '') . '>' . $this->tt_content_drawItem($row, $isRTE) . '</div>';
 
-							// NOTE: this is the end tag for <div class="t3-page-ce-body">
-							// because of bad (historic) conception, starting tag has to be placed inside tt_content_drawHeader()
-							$singleElementHTML .= '</div>';
+								// NOTE: this is the end tag for <div class="t3-page-ce-body">
+								// because of bad (historic) conception, starting tag has to be placed inside tt_content_drawHeader()
+								$singleElementHTML .= '</div>';
 
+								$statusHidden = ($this->isDisabled('tt_content', $row) ? ' t3-page-ce-hidden' : '');
+								$singleElementHTML = '<div class="t3-page-ce' . $statusHidden . '">' . $singleElementHTML . '</div>';
 
-							$statusHidden = ($this->isDisabled('tt_content', $row) ? ' t3-page-ce-hidden' : '');
-							$singleElementHTML = '<div class="t3-page-ce' . $statusHidden . '">' . $singleElementHTML . '</div>';
-
-							if ($this->defLangBinding && $this->tt_contentConfig['languageMode']) {
-								$defLangBinding[$key][$lP][$row[($lP ? 'l18n_parent' : 'uid')]] = $singleElementHTML;
+								if ($this->defLangBinding && $this->tt_contentConfig['languageMode']) {
+									$defLangBinding[$key][$lP][$row[($lP ? 'l18n_parent' : 'uid')]] = $singleElementHTML;
+								} else {
+									$content[$key] .= $singleElementHTML;
+								}
 							} else {
-								$content[$key] .= $singleElementHTML;
+								unset($rowArr[$rKey]);
 							}
-						} else {
-							unset($rowArr[$rKey]);
 						}
-					}
 
-					// Add new-icon link, header:
-					$newP = $this->newContentElementOnClick($id, $key, $lP);
-					$colTitle = t3lib_BEfunc::getProcessedValue('tt_content', 'colPos', $key);
+						// Add new-icon link, header:
+						$newP = $this->newContentElementOnClick($id, $key, $lP);
+						$colTitle = t3lib_BEfunc::getProcessedValue('tt_content', 'colPos', $key);
 
-					$tcaItems = t3lib_div::callUserFunction('EXT:cms/classes/class.tx_cms_backendlayout.php:tx_cms_BackendLayout->getColPosListItemsParsed', $id, $this);
-					foreach ($tcaItems as $item) {
-						if ($item[1] == $key) {
-							$colTitle = $GLOBALS['LANG']->sL($item[0]);
+						$tcaItems = t3lib_div::callUserFunction('EXT:cms/classes/class.tx_cms_backendlayout.php:tx_cms_BackendLayout->getColPosListItemsParsed', $id, $this);
+						foreach ($tcaItems as $item) {
+							if ($item[1] == $key) {
+								$colTitle = $GLOBALS['LANG']->sL($item[0]);
+							}
 						}
+						$head[$key] .= $this->tt_content_drawColHeader($colTitle, ($this->doEdit && count($rowArr) ? '&edit[tt_content][' . $editUidList . ']=edit' . $pageTitleParamForAltDoc : ''), $newP);
+						$editUidList = '';
 					}
-					$head[$key] .= $this->tt_content_drawColHeader($colTitle, ($this->doEdit && count($rowArr) ? '&edit[tt_content][' . $editUidList . ']=edit' . $pageTitleParamForAltDoc : ''), $newP);
-					$editUidList = '';
 				}
 
 				// For EACH column, fit the rendered content into a table cell:
