@@ -1,5 +1,6 @@
 2016-11-22  3c78195                  [RELEASE] Release of TYPO3 4.5.49 (TYPO3 Release Team)
-2016-11-22  3d05186  #73453          [SECURITY] Disallow invalid encoding in GeneralUtility::validPathStr (Steffen Müller)
+
+2016-11-22  ecb0403  #73453          [SECURITY] Disallow invalid encoding in GeneralUtility::validPathStr (Steffen Müller)
 2016-07-19  7549d59                  [TASK] Set TYPO3 version to 4.5.49-dev (TYPO3 Release Team)
 
 2016-07-19  f5f322b                  [RELEASE] Release of TYPO3 4.5.48 (TYPO3 Release Team)
