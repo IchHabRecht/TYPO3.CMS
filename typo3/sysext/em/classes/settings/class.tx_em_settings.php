@@ -199,7 +199,7 @@ class tx_em_Settings implements t3lib_Singleton {
 		}
 		if (!$this->settings['selectedMirror']) {
 			$rand = array_rand($mirrors);
-			$url = 'http://' . $mirrors[$rand]['host'] . $mirrors[$rand]['path'];
+			$url = 'https://' . $mirrors[$rand]['host'] . $mirrors[$rand]['path'];
 		}
 		else {
 			$selectedMirror = NULL;
@@ -209,7 +209,7 @@ class tx_em_Settings implements t3lib_Singleton {
 					break;
 				}
 			}
-			$url = 'http://' . $selectedMirror['host'] . $selectedMirror['path'];
+			$url = 'https://' . $selectedMirror['host'] . $selectedMirror['path'];
 		}
 
 		return $url;
