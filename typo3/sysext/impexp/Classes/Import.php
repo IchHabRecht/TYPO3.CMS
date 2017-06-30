@@ -988,6 +988,20 @@ class Import extends ImportExport
                         break;
                 }
             }
+            // Reset unresolved relation counter
+            // There might be reference fields in TCA which do have a value due to polluted database entries
+            // We need to reset those fields as well as the importer (DataHandler) otherwise tries to resolves
+            // those relations. Correct relations are still set ->setRelations() and ->setFlexFormRelations()
+            foreach ($this->import_data[$table][$ID] as $field => $_) {
+                if ($table !== 'sys_file_reference'
+                    && $field !== 'uid_local'
+                    && (isset($this->dat['records'][$table . ':' . $uid]['rels'][$field])
+                        || (!empty($GLOBALS['TCA'][$table]['columns'][$field]['config']) && $this->isReferenceField($GLOBALS['TCA'][$table]['columns'][$field]['config']))
+                    )
+                ) {
+                    $this->import_data[$table][$ID][$field] = '';
+                }
+            }
         } elseif ($table . ':' . $uid != 'pages:0') {
             // On root level we don't want this error message.
             $this->error('Error: no record was found in data array!');
@@ -2173,5 +2187,20 @@ class Import extends ImportExport
         } else {
             $this->error('CHARSET: No charset found in import file!');
         }
+    }
+
+    /**
+     * @param array $configuration
+     * @return bool
+     */
+    protected function isReferenceField(array $configuration)
+    {
+        return ($configuration['type'] === 'inline' && !empty($configuration['foreign_table']))
+            || ($configuration['type'] === 'group'
+                && ($configuration['internal_type'] === 'file' || $configuration['internal_type'] === 'file_reference'))
+            || ((($configuration['type'] === 'group' && $configuration['internal_type'] === 'db')
+                    || ($configuration['type'] === 'select' && !empty($configuration['foreign_table'])))
+                && !empty($configuration['MM']))
+            || $configuration['type'] === 'flex';
     }
 }
