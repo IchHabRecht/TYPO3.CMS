@@ -1017,7 +1017,7 @@ class DatabaseRecordList extends \TYPO3\CMS\Recordlist\RecordList\AbstractDataba
 						($table === 'tt_content' ? $this->id : $row['uid']),
 						$this->backPath,
 						'',
-						($table === 'tt_content' ? '#' . $row['uid'] : '')
+						($table === 'tt_content' ? '#c' . $row['uid'] : '')
 					)
 				) . '" title="' . $GLOBALS['LANG']->sL('LLL:EXT:lang/locallang_core.xlf:labels.showPage', TRUE) . '">'
 				. IconUtility::getSpriteIcon('actions-document-view') . '</a>';
