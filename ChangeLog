@@ -1,3 +1,12 @@
+2017-08-29 3719867 [RELEASE] Release of TYPO3 ELTS 6.2.32
+2017-08-24 eaa56c9 [SECURITY] Prevent insecure TypoScript processing in EXT:form
+2017-08-16 2c00d44 [BUGFIX] Use EXEC_TIME for sys_log entry instead of time()
+2017-08-16 bf2c28b [BUGFIX] HtmlArea: Use getAttribute() directly
+2017-08-16 b13606a [BUGFIX] Reload page tree after deleting pages
+2017-08-16 1c4667b [TASK] Correct view webpage link anchor in list module
+2017-08-16 65cc8a1 [BUGFIX] Add support for target attribute to form viewhelper
+
+
 * 7890926 (HEAD -> TYPO3_6-2) [RELEASE] Release of TYPO3 ELTS 6.2.31  Anja Leichsenring, 2 minutes ago
 * 0312c09 [TASK] Deactivate AutoUpdateCheck Button in Install Tool  Anja Leichsenring, 4 minutes ago
 * f2ce731 [BUGFIX] Allow file replace for editors  Helmut Hummel, 13 days ago
