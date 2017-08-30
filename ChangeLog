@@ -1,3 +1,7 @@
+2017-08-30 c9fc4b8 [RELEASE] Release of TYPO3 ELTS 6.2.33
+2017-08-30 73c0ddb [BUGFIX] Fix typo in rtehtmlarea TYPO3Link
+
+
 2017-08-29 3719867 [RELEASE] Release of TYPO3 ELTS 6.2.32
 2017-08-24 eaa56c9 [SECURITY] Prevent insecure TypoScript processing in EXT:form
 2017-08-16 2c00d44 [BUGFIX] Use EXEC_TIME for sys_log entry instead of time()
