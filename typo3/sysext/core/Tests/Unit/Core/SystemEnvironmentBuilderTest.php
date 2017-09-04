@@ -42,7 +42,7 @@ class SystemEnvironmentBuilderTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	public function fileDenyPatternMatchesPhpExtensionDataProvider() {
 		$fileName = $this->getUniqueId('filename');
 		$data = array();
-		$phpExtensions = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', 'php,php3,php4,php5,php6,phpsh,phtml', TRUE);
+		$phpExtensions = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', 'php,php3,php4,php5,php6,phpsh,phtml,pht', TRUE);
 		foreach ($phpExtensions as $extension) {
 			$data[] = array($fileName . '.' . $extension);
 			$data[] = array($fileName . '.' . $extension . '.txt');
