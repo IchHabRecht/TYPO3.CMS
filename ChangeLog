@@ -1,3 +1,6 @@
+2017-09-06 5f64975 [RELEASE] Release of TYPO3 ELTS 6.2.35
+2017-09-06 8736820 [SECURITY][BUGFIX] Remove version from default User-Agent
+
 2017-09-05 322f070 [RELEASE] Release of TYPO3 ELTS 6.2.34
 2017-09-04 1ee27f9 [SECURITY][BUGFIX] Remove version from default User-Agent
 2017-09-04 97b23fc [SECURITY][BUGFIX] Disallow pht as file extension
