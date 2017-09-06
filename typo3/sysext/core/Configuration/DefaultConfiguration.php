@@ -799,7 +799,7 @@ return array(
 		'ssl_capath' => '',		// String: Directory holding multiple Certificate Authority files.
 		'ssl_local_cert' => '',		// String: Name of a file containing local certificate.
 		'ssl_passphrase' => '',		// String: Passphrase with which local certificate was encoded.
-		'userAgent' => 'TYPO3/' . TYPO3_version,		// String: Default user agent. This sets the constant <em>TYPO3_user_agent</em>.
+		'userAgent' => 'TYPO3/',		// String: Default user agent. This sets the constant <em>TYPO3_user_agent</em>.
 	),
 	'LOG' => array(
 		'writerConfiguration' => array(
