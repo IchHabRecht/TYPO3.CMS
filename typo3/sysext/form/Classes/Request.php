@@ -14,6 +14,8 @@ namespace TYPO3\CMS\Form;
  * The TYPO3 project - inspiring people to share!
  */
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 /**
  * Request Handler for Form
  *
@@ -119,9 +121,9 @@ class Request implements \TYPO3\CMS\Core\SingletonInterface {
 	public function get($key) {
 		switch (TRUE) {
 			case $this->method === 'get' && isset($_GET[$this->prefix][$key]):
-				return $_GET[$this->prefix][$key];
+				return $this->sanitizeFormFieldValue($_GET[$this->prefix][$key]);
 			case $this->method === 'post' && isset($_POST[$this->prefix][$key]):
-				return $_POST[$this->prefix][$key];
+				return $this->sanitizeFormFieldValue($_POST[$this->prefix][$key]);
 			case $this->method === 'session' && isset($this->sessionData[$key]):
 				return $this->sessionData[$key];
 			default:
@@ -177,9 +179,12 @@ class Request implements \TYPO3\CMS\Core\SingletonInterface {
 	 */
 	public function getQuery($key = NULL, $default = NULL) {
 		if ($key === NULL) {
-			return $_GET[$this->prefix];
+			return $this->sanitizeFormData($_GET[$this->prefix]);
 		}
-		return isset($_GET[$this->prefix][$key]) ? $_GET[$this->prefix][$key] : $default;
+		if (isset($_GET[$this->prefix][$key])) {
+			return $this->sanitizeFormFieldValue($_GET[$this->prefix][$key]);
+		}
+		return $default;
 	}
 
 	/**
@@ -193,9 +198,12 @@ class Request implements \TYPO3\CMS\Core\SingletonInterface {
 	 */
 	public function getPost($key = NULL, $default = NULL) {
 		if ($key === NULL) {
-			return $_POST[$this->prefix];
+			return $this->sanitizeFormData($_POST[$this->prefix]);
 		}
-		return isset($_POST[$this->prefix][$key]) ? $_POST[$this->prefix][$key] : $default;
+		if (isset($_POST[$this->prefix][$key])) {
+			return $this->sanitizeFormFieldValue($_POST[$this->prefix][$key]);
+		}
+		return $default;
 	}
 
 	/**
@@ -289,9 +297,9 @@ class Request implements \TYPO3\CMS\Core\SingletonInterface {
 				);
 
 				if (is_uploaded_file($uploadedFile)) {
-					$tempFilename = \TYPO3\CMS\Core\Utility\GeneralUtility::upload_to_tempfile($uploadedFile);
+					$tempFilename = GeneralUtility::upload_to_tempfile($uploadedFile);
 					if (TYPO3_OS === 'WIN') {
-						$tempFilename = \TYPO3\CMS\Core\Utility\GeneralUtility::fixWindowsFilePath($tempFilename);
+						$tempFilename = GeneralUtility::fixWindowsFilePath($tempFilename);
 					}
 					if ($tempFilename !== '') {
 						// Use finfo to get the mime type
@@ -303,6 +311,9 @@ class Request implements \TYPO3\CMS\Core\SingletonInterface {
 							'originalFilename' => $_FILES[$this->prefix]['name'][$fieldName],
 							'type' => $mimeType,
 							'size' => (int)$_FILES[$this->prefix]['size'][$fieldName]
+						);
+						$formData[$fieldName]['hash'] = GeneralUtility::hmac(
+							serialize($formData[$fieldName])
 						);
 					}
 				}
@@ -331,10 +342,66 @@ class Request implements \TYPO3\CMS\Core\SingletonInterface {
 		if (is_array($values)) {
 			foreach ($values as $value) {
 				if (is_array($value) && isset($value['tempFilename'])) {
-					\TYPO3\CMS\Core\Utility\GeneralUtility::unlink_tempfile($value['tempFilename']);
+					GeneralUtility::unlink_tempfile($value['tempFilename']);
 				}
 			}
 		}
 	}
 
+	/**
+	 * Removes blacklisted keys from submitted form field values.
+	 *
+	 * @param mixed|array $formData
+	 * @return mixed|array
+	 */
+	protected function sanitizeFormData($formData) {
+		if (!is_array($formData)) {
+			return $formData;
+		}
+
+		foreach ($formData as $fieldName => $fieldValue) {
+			if (!is_array($fieldValue)) {
+				continue;
+			}
+			$formData[$fieldName] = $this->sanitizeFormFieldValue(
+				$formData[$fieldName]
+			);
+			if (empty($formData[$fieldName])) {
+				unset($formData[$fieldName]);
+			}
+		}
+
+		return $formData;
+	}
+
+	/**
+	 * Removes blacklisted keys from submitted form field value.
+	 *
+	 * @param $fieldValue
+	 * @return array
+	 */
+	protected function sanitizeFormFieldValue($fieldValue) {
+		if (!is_array($fieldValue)) {
+			return $fieldValue;
+		}
+
+		$verificationArray = array(
+			'tempFilename' => 1,
+			'originalFilename' => 1,
+			'type' => 1,
+			'size' => 1
+		);
+
+		$intersections = array_intersect_key($fieldValue, $verificationArray);
+		if (count($intersections) === 0) {
+			return $fieldValue;
+		}
+
+		$hash = !empty($fieldValue['hash']) ? $fieldValue['hash'] : NULL;
+		if (GeneralUtility::hmac(serialize($intersections)) === $hash) {
+			return $fieldValue;
+		}
+
+		return array_diff_key($fieldValue, $verificationArray);
+	}
 }
