@@ -1,3 +1,15 @@
+2018-03-13 a18b31f [RELEASE] Release of TYPO3 ELTS 6.2.36
+2018-02-12 31dd746 Merge pull request #5 in ELTS/elts-working-repo from bugfix/TGT-1040-form to TYPO3_6-2
+2018-02-12 8b492a7 [SECURITY] Properly verifiy any sanitize user submitted mail form data
+2018-02-12 e497816 Merge pull request #3 in ELTS/elts-working-repo from block_access_to_typoscript to TYPO3
+2018-02-09 c50204e take over the changes the same way they were merged into 7.6 (https://review.typo3.org/c
+2018-02-06 182f993 Merge pull request #2 in ELTS/elts-working-repo from task/composer_licence to TYPO3_6-2
+2018-02-06 345112c [TASK] Update composer.json license definition
+2018-02-05 7d6d714 Merge pull request #4 in ELTS/elts-working-repo from task/fix_redit_tests to TYPO3_6-2
+2018-02-05 f39cf88 [BUGFIX] Fix broken redis tests
+2018-02-01 ec73b28 [TASK] Block access to ext_typoscript_setup|constants.typoscript files
+
+
 2017-09-06 5f64975 [RELEASE] Release of TYPO3 ELTS 6.2.35
 2017-09-06 8736820 [SECURITY][BUGFIX] Remove version from default User-Agent
 
