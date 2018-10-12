@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "34ef85fbd60b2155cc33d782c51d54c6",
+    "content-hash": "550fd43508cb56507269cceb6c964e77",
     "packages": [
         {
             "name": "cogpowered/finediff",
@@ -4995,16 +4995,16 @@
         },
         {
             "name": "typo3/testing-framework",
-            "version": "4.9.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/TYPO3/testing-framework.git",
-                "reference": "32f7d2eced0c7930c6535d7b60eef24775e4c207"
+                "reference": "de714f32fa9a848da384ea511358fad3f163d147"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/TYPO3/testing-framework/zipball/32f7d2eced0c7930c6535d7b60eef24775e4c207",
-                "reference": "32f7d2eced0c7930c6535d7b60eef24775e4c207",
+                "url": "https://api.github.com/repos/TYPO3/testing-framework/zipball/de714f32fa9a848da384ea511358fad3f163d147",
+                "reference": "de714f32fa9a848da384ea511358fad3f163d147",
                 "shasum": ""
             },
             "require": {
@@ -5050,7 +5050,7 @@
                 "tests",
                 "typo3"
             ],
-            "time": "2018-09-17T14:26:30+00:00"
+            "time": "2018-10-12T08:48:24+00:00"
         },
         {
             "name": "webmozart/assert",
@@ -5103,9 +5103,18 @@
             "time": "2018-01-29T19:49:41+00:00"
         }
     ],
-    "aliases": [],
+    "aliases": [
+        {
+            "alias": "4.9.0",
+            "alias_normalized": "4.9.0.0",
+            "version": "9999999-dev",
+            "package": "typo3/testing-framework"
+        }
+    ],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "typo3/testing-framework": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
